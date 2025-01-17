@@ -1,20 +1,38 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title text-center>Galería de Fotos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Botón para tomar una foto -->
+  <ion-button
+    (click)="takePicture()"
+    expand="block"
+    color="secondary"
+    class="capture-button"
+  >
+    <ion-icon slot="start" name="camera"></ion-icon>
+    Tomar Foto
+  </ion-button>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <!-- Galería de imágenes -->
+  @if (images && images.length > 0) {
+  <div class="image-gallery">
+    @for (image of images; track $index) {
+    <app-card-image
+      [image]="image"
+      (deleteImageEvent)="deleteImage($event)"
+    ></app-card-image>
+    }
   </div>
+  }
+
+  <!-- Mensaje para cuando no hay imágenes -->
+  @else {
+  <div class="no-images">
+    <ion-icon name="image-outline" size="large"></ion-icon>
+    <p>Aún no has tomado ninguna foto.</p>
+  </div>
+  }
 </ion-content>
